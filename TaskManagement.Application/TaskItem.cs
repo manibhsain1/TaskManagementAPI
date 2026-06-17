@@ -3,6 +3,11 @@ namespace TaskManagement.Application;
 
 public class TaskItem
 {
+
+
+    public int UserId { get; private set; }      // ← add this
+    public User? User { get; private set; }
+
     public int Id { get; private set; }
     public string Title { get; private set; } = string.Empty;
     public string? Description { get; private set; }

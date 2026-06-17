@@ -7,9 +7,11 @@ namespace TaskManagement.Infrastructure.Data;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<TaskItem> Tasks => Set<TaskItem>();
+    public DbSet<User> Users => Set<User>();
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +27,11 @@ public class AppDbContext : DbContext
             entity.Property(t => t.Status)
                 .IsRequired()
                 .HasDefaultValue("Pending");
+
+            entity.HasOne(t => t.User)
+                .WithMany()
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         });
     }
